@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import config from "./config";
 import Authentication from "./Authentication";
 import Navigation from "./Navigation";
+import ApolloClient from "apollo-boost";
+import { setContext } from 'apollo-link-context';
+import { ApolloProvider } from "react-apollo";
+import { createHttpLink } from "apollo-link-http";
 
 import {
     StyleSheet,
@@ -14,12 +18,18 @@ import {
     Alert
 } from 'react-native';
 
-import ApolloClient from "apollo-boost";
-import { ApolloProvider } from "react-apollo";
-
-export const client = new ApolloClient({
-    uri: config.server.graphql
-});
+function createApolloClient(token){
+      return new ApolloClient({
+        uri: config.server.graphql,
+        request: async operation => {
+            operation.setContext({
+              headers: {
+                authorization: token ? `Bearer ${token}` : "",
+              }
+            });
+          },
+      });
+}
 
 export default class App extends React.Component {
 
@@ -47,15 +57,21 @@ export default class App extends React.Component {
 
     render() {
         return (
-            <ApolloProvider client={client}>
+            <ApolloProvider client={createApolloClient(this.state.authenticationToken)}>
                 {this.getContents()}
             </ApolloProvider>
         )
     }
 
     getContents() {
+
+        const authentication = {
+            token: this.state.authenticationToken,
+            user: this.state.authenticationUser
+        }
+
         if (this.state.authenticationToken)
-            return <Navigation />
+            return <Navigation screenProps={{authentication}}/>
         else
             return <Authentication onAuthentication={this.onAuthentication} />
     }

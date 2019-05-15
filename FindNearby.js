@@ -24,16 +24,13 @@ const POSTS = gql`
 }
 `;
 
-export default class Posts extends Component {
+export default class FindNearby extends Component {
 
     state = {
         posts: []
     }
 
     render() {
-
-        console.log(this.props);
-
         return (
             <View style={{ padding: 20, paddingTop: 40 }}>
                 <Query query={POSTS}>
