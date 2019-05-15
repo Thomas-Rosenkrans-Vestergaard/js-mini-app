@@ -3,9 +3,7 @@ import config from "./config";
 import Authentication from "./Authentication";
 import Navigation from "./Navigation";
 import ApolloClient from "apollo-boost";
-import { setContext } from 'apollo-link-context';
 import { ApolloProvider } from "react-apollo";
-import { createHttpLink } from "apollo-link-http";
 
 import {
     StyleSheet,
