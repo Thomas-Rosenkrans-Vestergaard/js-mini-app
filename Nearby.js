@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import ReactNative, { TextView, StyleSheet, View, Text, BackHandler } from "react-native";
+import ReactNative, { TextView, StyleSheet, View, Text, BackHandler, TextInput, Button } from "react-native";
 import { gql } from "apollo-boost";
 import { Query, ApolloConsumer } from 'react-apollo';
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 
 const NEARBY_USERS = gql`
-{
-    getNearbyUsers(radiusMeters: 5000) {
+query getNearbyUsers($radiusMeters: Int!) {
+    getNearbyUsers(radiusMeters: $radiusMeters) {
         user {
             identifier
             firstName
@@ -22,6 +22,7 @@ const NEARBY_USERS = gql`
 export default class Nearby extends Component {
 
     state = {
+        radius: "1000",
         mapOpen: false,
         mapNearby: []
     }
@@ -31,7 +32,11 @@ export default class Nearby extends Component {
             <View>
                 {this.state.mapOpen ? this.createMap() :
                     <View padding={20} paddingTop={40} >
-                        <Query query={NEARBY_USERS}>
+                        <View marginBottom={20}>
+                            <TextInput style={{backgroundColor: '#ddd'}} keyboardType='numeric' padding={10} marginBottom={20} value={this.state.radius} onChange={this.onRadiusChange} />
+                            <Button style={{height: 50}} title="Search" onPress={() => this.setState({})} />
+                        </View>
+                        <Query query={NEARBY_USERS} variables={{radiusMeters: parseInt(this.state.radius)}}>
                             {({ loading, error, data, refetch }) => {
                                 if (loading)
                                     return <Text>Searching for nearby players.</Text>
@@ -39,7 +44,7 @@ export default class Nearby extends Component {
                                     return <Text>An error occured.</Text>
 
                                 return data.getNearbyUsers.map(nearby =>
-                                    <View marginBottom={30} key={nearby.user.identifier}>
+                                    <View marginBottom={40} key={nearby.user.identifier}>
                                         <Text>{nearby.user.firstName} {nearby.user.lastName}</Text>
                                         <Text>Longitude: {nearby.longitude}</Text>
                                         <Text>Latitude: {nearby.latitude}</Text>
@@ -50,6 +55,10 @@ export default class Nearby extends Component {
                     </View >
                 }
             </View>)
+    }
+
+    onRadiusChange = e => {
+        this.setState({ radius: e.value });
     }
 
     viewSingleUserOnMap = (nearby) => {

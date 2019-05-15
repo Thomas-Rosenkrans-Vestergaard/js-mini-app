@@ -32,8 +32,6 @@ export default class Posts extends Component {
 
     render() {
 
-        console.log(this.props);
-
         return (
             <View style={{ padding: 20, paddingTop: 40 }}>
                 <Query query={POSTS}>
