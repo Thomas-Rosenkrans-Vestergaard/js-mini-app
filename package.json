@@ -15,6 +15,7 @@
     "react-dom": "^16.8.6",
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
     "react-native-maps": "^0.24.2",
+    "react-native-markdown-renderer": "^3.2.8",
     "react-native-root-toast": "^3.0.2",
     "react-navigation": "^3.9.1"
   },
