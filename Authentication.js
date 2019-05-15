@@ -20,6 +20,18 @@ export default class Authentication extends React.Component {
             email: 'tvestergaard@hotmail.com',
             password: '123456',
         }
+
+        this.props.onAuthentication(
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjVjZDNmZDdjZmFkZjVkMDc4NDhkYzJkZCIsImZpcnN0TmFtZSI6IlRob21hcyIsImxhc3ROYW1lIjoiVmVzdGVyZ2FhcmQiLCJlbWFpbCI6InR2ZXN0ZXJnYWFyZEBob3RtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJiJDEwJGhQcVoyUUJtbVpnVUg4VnBlUlRhMnVqRGprbjBTb2ZXQTh1My5zRS8yLmFaOWZUMHJFaUlhIiwiX192IjowfSwiaWF0IjoxNTU3OTM5NjE3fQ.95Pm7-cRCeMzG-z-aJeXb1gC3xNI8S7htUgeO4fodd4",
+            {
+                "__v": 0,
+                "_id": "5cd3fd7cfadf5d07848dc2dd",
+                "email": "tvestergaard@hotmail.com",
+                "firstName": "Thomas",
+                "lastName": "Vestergaard",
+                "password": "$2b$10$hPqZ2QBmmZgUH8VpeRTa2ujDjkn0SofWA8u3.sE/2.aZ9fT0rEiIa",
+            }
+        )
     }
 
     sendAuthenticationRequest = async () => {
