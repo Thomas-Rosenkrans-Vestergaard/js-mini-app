@@ -1,6 +1,6 @@
 export default {
     server: {
-        authentication: 'http://4881a959.ngrok.io/api/account/authentication',
-        graphql: 'http://4881a959.ngrok.io/api/graphql'
+        authentication: 'http://9a9b6ab8.ngrok.io/api/account/authentication',
+        graphql: 'http://9a9b6ab8.ngrok.io/api/graphql'
     }
 };

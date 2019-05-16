@@ -33,15 +33,23 @@ export default class Nearby extends Component {
                 {this.state.mapOpen ? this.createMap() :
                     <View padding={20} paddingTop={40} >
                         <View marginBottom={20}>
-                            <TextInput style={{backgroundColor: '#ddd'}} keyboardType='numeric' padding={10} marginBottom={20} value={this.state.radius} onChange={this.onRadiusChange} />
-                            <Button style={{height: 50}} title="Search" onPress={() => this.setState({})} />
+                            <TextInput 
+                            style={{ backgroundColor: '#ddd' }} 
+                            keyboardType='numeric' 
+                            padding={10} 
+                            marginBottom={20} 
+                            value={this.state.radius}
+                            onChange={this.onRadiusChange} />
                         </View>
-                        <Query query={NEARBY_USERS} variables={{radiusMeters: parseInt(this.state.radius)}}>
+                        <Query query={NEARBY_USERS} variables={{ radiusMeters: parseInt(this.state.radius) }}>
                             {({ loading, error, data, refetch }) => {
                                 if (loading)
                                     return <Text>Searching for nearby players.</Text>
                                 if (error)
                                     return <Text>An error occured.</Text>
+
+                                if (data.getNearbyUsers.length < 1)
+                                    return <Text>There are no nearby users.</Text>
 
                                 return data.getNearbyUsers.map(nearby =>
                                     <View marginBottom={40} key={nearby.user.identifier}>
@@ -58,7 +66,7 @@ export default class Nearby extends Component {
     }
 
     onRadiusChange = e => {
-        this.setState({ radius: e.value });
+        this.setState({ radius: e.nativeEvent.text });
     }
 
     viewSingleUserOnMap = (nearby) => {
